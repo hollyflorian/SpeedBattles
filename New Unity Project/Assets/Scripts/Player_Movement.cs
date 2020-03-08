@@ -8,6 +8,7 @@ public class Player_Movement : MonoBehaviour
     public float playerSprintSpeed = 15f;
     public float playerGravity = -9f;
     public float playerJump = 2f;
+    public float sprintMultiplikator = 1f;
     public CharacterController controller;
 
     // GroundCheck
@@ -27,9 +28,14 @@ public class Player_Movement : MonoBehaviour
         Vector3 move = transform.right * x + transform.forward * z;
 
         if(Input.GetKey("left shift")){
-            controller.Move(move * playerSprintSpeed * Time.deltaTime);
+            sprintMultiplikator = sprintMultiplikator * 1.0002f;
+            if(sprintMultiplikator > 1.2f){
+                sprintMultiplikator = 1.2f;
+            }
+            controller.Move(move * playerSprintSpeed * sprintMultiplikator * Time.deltaTime);
         }else{
             controller.Move(move* playerSpeed * Time.deltaTime);
+            sprintMultiplikator = 1f;
         }
 
         // Power Slide
